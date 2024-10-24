@@ -16,27 +16,37 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QLabel,
-    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QSpinBox, QTextEdit, QVBoxLayout, QWidget)
+    QLayout, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSpinBox, QTextEdit, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(640, 500)
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
+        MainWindow.resize(640, 510)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
-        self.centralwidget.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        self.centralwidget = QWidget(MainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy1.setHorizontalStretch(1)
+        sizePolicy1.setVerticalStretch(1)
+        sizePolicy1.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy1)
+        self.centralwidget.setMaximumSize(QSize(666, 545))
+        self.centralwidget.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.centralwidget.setAutoFillBackground(False)
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
         self.verticalLayoutWidget.setGeometry(QRect(0, 0, 641, 518))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
+        self.verticalLayout.setContentsMargins(1, 1, 1, 1)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
@@ -51,11 +61,11 @@ class Ui_MainWindow(object):
 
         self.com_combo = QComboBox(self.verticalLayoutWidget)
         self.com_combo.setObjectName(u"com_combo")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.com_combo.sizePolicy().hasHeightForWidth())
-        self.com_combo.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(1)
+        sizePolicy2.setVerticalStretch(1)
+        sizePolicy2.setHeightForWidth(self.com_combo.sizePolicy().hasHeightForWidth())
+        self.com_combo.setSizePolicy(sizePolicy2)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.com_combo)
 
@@ -68,8 +78,11 @@ class Ui_MainWindow(object):
 
         self.baudrate_spinbox = QSpinBox(self.verticalLayoutWidget)
         self.baudrate_spinbox.setObjectName(u"baudrate_spinbox")
-        sizePolicy1.setHeightForWidth(self.baudrate_spinbox.sizePolicy().hasHeightForWidth())
-        self.baudrate_spinbox.setSizePolicy(sizePolicy1)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.baudrate_spinbox.sizePolicy().hasHeightForWidth())
+        self.baudrate_spinbox.setSizePolicy(sizePolicy3)
         self.baudrate_spinbox.setMinimum(9600)
         self.baudrate_spinbox.setMaximum(115200)
 
@@ -84,8 +97,8 @@ class Ui_MainWindow(object):
 
         self.data_bits_combo = QComboBox(self.verticalLayoutWidget)
         self.data_bits_combo.setObjectName(u"data_bits_combo")
-        sizePolicy1.setHeightForWidth(self.data_bits_combo.sizePolicy().hasHeightForWidth())
-        self.data_bits_combo.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.data_bits_combo.sizePolicy().hasHeightForWidth())
+        self.data_bits_combo.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.data_bits_combo)
 
@@ -98,8 +111,8 @@ class Ui_MainWindow(object):
 
         self.stop_bits_combo = QComboBox(self.verticalLayoutWidget)
         self.stop_bits_combo.setObjectName(u"stop_bits_combo")
-        sizePolicy1.setHeightForWidth(self.stop_bits_combo.sizePolicy().hasHeightForWidth())
-        self.stop_bits_combo.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.stop_bits_combo.sizePolicy().hasHeightForWidth())
+        self.stop_bits_combo.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.stop_bits_combo)
 
@@ -127,31 +140,31 @@ class Ui_MainWindow(object):
 
         self.connect_button = QPushButton(self.verticalLayoutWidget)
         self.connect_button.setObjectName(u"connect_button")
-        sizePolicy1.setHeightForWidth(self.connect_button.sizePolicy().hasHeightForWidth())
-        self.connect_button.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.connect_button.sizePolicy().hasHeightForWidth())
+        self.connect_button.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(6, QFormLayout.FieldRole, self.connect_button)
 
         self.disconnect_button = QPushButton(self.verticalLayoutWidget)
         self.disconnect_button.setObjectName(u"disconnect_button")
         self.disconnect_button.setEnabled(False)
-        sizePolicy1.setHeightForWidth(self.disconnect_button.sizePolicy().hasHeightForWidth())
-        self.disconnect_button.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.disconnect_button.sizePolicy().hasHeightForWidth())
+        self.disconnect_button.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(7, QFormLayout.FieldRole, self.disconnect_button)
 
         self.refresh_button = QPushButton(self.verticalLayoutWidget)
         self.refresh_button.setObjectName(u"refresh_button")
-        sizePolicy1.setHeightForWidth(self.refresh_button.sizePolicy().hasHeightForWidth())
-        self.refresh_button.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.refresh_button.sizePolicy().hasHeightForWidth())
+        self.refresh_button.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(9, QFormLayout.FieldRole, self.refresh_button)
 
         self.send_button = QPushButton(self.verticalLayoutWidget)
         self.send_button.setObjectName(u"send_button")
         self.send_button.setEnabled(False)
-        sizePolicy1.setHeightForWidth(self.send_button.sizePolicy().hasHeightForWidth())
-        self.send_button.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.send_button.sizePolicy().hasHeightForWidth())
+        self.send_button.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(10, QFormLayout.FieldRole, self.send_button)
 
@@ -165,8 +178,8 @@ class Ui_MainWindow(object):
 
         self.clear_button = QPushButton(self.verticalLayoutWidget)
         self.clear_button.setObjectName(u"clear_button")
-        sizePolicy1.setHeightForWidth(self.clear_button.sizePolicy().hasHeightForWidth())
-        self.clear_button.setSizePolicy(sizePolicy1)
+        sizePolicy3.setHeightForWidth(self.clear_button.sizePolicy().hasHeightForWidth())
+        self.clear_button.setSizePolicy(sizePolicy3)
 
         self.formLayout.setWidget(8, QFormLayout.FieldRole, self.clear_button)
 
@@ -192,6 +205,9 @@ class Ui_MainWindow(object):
         self.disconnect_button.setText(QCoreApplication.translate("MainWindow", u"Disconnect", None))
         self.refresh_button.setText(QCoreApplication.translate("MainWindow", u"Refresh Ports", None))
         self.send_button.setText(QCoreApplication.translate("MainWindow", u"Send Command", None))
+#if QT_CONFIG(shortcut)
+        self.send_button.setShortcut(QCoreApplication.translate("MainWindow", u"Return", None))
+#endif // QT_CONFIG(shortcut)
         self.status_label.setText(QCoreApplication.translate("MainWindow", u"Disconnect", None))
         self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
     # retranslateUi

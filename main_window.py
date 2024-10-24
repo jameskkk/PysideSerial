@@ -2,6 +2,7 @@ import sys
 import serial
 import serial.tools.list_ports
 from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 from PySide6.QtGui import QIcon, QCloseEvent
 from PySide6.QtCore import QThread, Signal
 from main_window_ui import Ui_MainWindow
@@ -38,6 +39,7 @@ class SerialTool(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.setFixedSize(640, 510) # Fixed Windows size
         # self.setWindowIcon(QIcon("nkg.ico"))  # Set Windows ICON
         resources_rc.qInitResources()
@@ -62,6 +64,7 @@ class SerialTool(QMainWindow):
         self.ui.send_button.clicked.connect(self.send_data)
 
         self.serial_port = None
+        self.serial_thread = None
 
     def populate_com_ports(self):
         ports = serial.tools.list_ports.comports()
