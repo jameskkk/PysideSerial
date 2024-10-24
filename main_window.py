@@ -9,18 +9,18 @@ class SerialTool(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setFixedSize(640, 500) #固定視窗大小
+        self.setFixedSize(640, 500) # Fixed Windows size
         
         # Initialize COM Port
         self.populate_com_ports()
 
         # Initialize data bits
         self.ui.data_bits_combo.addItems(["5", "6", "7", "8"])
-        self.ui.data_bits_combo.setCurrentIndex(3)  # 預設為8個資料位
+        self.ui.data_bits_combo.setCurrentIndex(3)  # Default 8 data bits
 
         # Initialize stop bits
         self.ui.stop_bits_combo.addItems(["1", "1.5", "2"])
-        self.ui.stop_bits_combo.setCurrentIndex(0)  # 預設為1個停止位
+        self.ui.stop_bits_combo.setCurrentIndex(0)  # Defaul set 1 stop bit
 
         # bind button clicked event
         self.ui.connect_button.clicked.connect(self.connect_serial)

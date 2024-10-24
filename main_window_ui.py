@@ -159,7 +159,7 @@ class Ui_MainWindow(object):
         self.status_label.setObjectName(u"status_label")
         sizePolicy.setHeightForWidth(self.status_label.sizePolicy().hasHeightForWidth())
         self.status_label.setSizePolicy(sizePolicy)
-        self.status_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.status_label.setAlignment(Qt.AlignRight|Qt.AlignTop|Qt.AlignTrailing)
 
         self.formLayout.setWidget(10, QFormLayout.FieldRole, self.status_label)
 
