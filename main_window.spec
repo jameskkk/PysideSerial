@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='main_window',
+    name='SerialTool',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -36,4 +36,10 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon=['nkg.ico'],
+    version="file_version.txt"
 )
+
+app = BUNDLE(exe,
+           name='SerialTool',
+           version='file_version.txt',
+           icon='nkg.ico')

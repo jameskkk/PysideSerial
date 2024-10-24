@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.6.0
+## Created by: Qt User Interface Compiler version 6.8.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(640, 500)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -39,8 +39,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
-        self.formLayout.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
-        self.formLayout.setRowWrapPolicy(QFormLayout.WrapLongRows)
+        self.formLayout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        self.formLayout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.formLayout.setContentsMargins(5, 5, 5, 5)
         self.com_label = QLabel(self.verticalLayoutWidget)
         self.com_label.setObjectName(u"com_label")
@@ -51,7 +51,7 @@ class Ui_MainWindow(object):
 
         self.com_combo = QComboBox(self.verticalLayoutWidget)
         self.com_combo.setObjectName(u"com_combo")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.com_combo.sizePolicy().hasHeightForWidth())
@@ -145,7 +145,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.refresh_button.sizePolicy().hasHeightForWidth())
         self.refresh_button.setSizePolicy(sizePolicy1)
 
-        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.refresh_button)
+        self.formLayout.setWidget(9, QFormLayout.FieldRole, self.refresh_button)
 
         self.send_button = QPushButton(self.verticalLayoutWidget)
         self.send_button.setObjectName(u"send_button")
@@ -153,15 +153,22 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.send_button.sizePolicy().hasHeightForWidth())
         self.send_button.setSizePolicy(sizePolicy1)
 
-        self.formLayout.setWidget(9, QFormLayout.FieldRole, self.send_button)
+        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.send_button)
 
         self.status_label = QLabel(self.verticalLayoutWidget)
         self.status_label.setObjectName(u"status_label")
         sizePolicy.setHeightForWidth(self.status_label.sizePolicy().hasHeightForWidth())
         self.status_label.setSizePolicy(sizePolicy)
-        self.status_label.setAlignment(Qt.AlignRight|Qt.AlignTop|Qt.AlignTrailing)
+        self.status_label.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTop|Qt.AlignmentFlag.AlignTrailing)
 
-        self.formLayout.setWidget(10, QFormLayout.FieldRole, self.status_label)
+        self.formLayout.setWidget(11, QFormLayout.FieldRole, self.status_label)
+
+        self.clear_button = QPushButton(self.verticalLayoutWidget)
+        self.clear_button.setObjectName(u"clear_button")
+        sizePolicy1.setHeightForWidth(self.clear_button.sizePolicy().hasHeightForWidth())
+        self.clear_button.setSizePolicy(sizePolicy1)
+
+        self.formLayout.setWidget(8, QFormLayout.FieldRole, self.clear_button)
 
 
         self.verticalLayout.addLayout(self.formLayout)
@@ -186,5 +193,6 @@ class Ui_MainWindow(object):
         self.refresh_button.setText(QCoreApplication.translate("MainWindow", u"Refresh Ports", None))
         self.send_button.setText(QCoreApplication.translate("MainWindow", u"Send Command", None))
         self.status_label.setText(QCoreApplication.translate("MainWindow", u"Disconnect", None))
+        self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
     # retranslateUi
 

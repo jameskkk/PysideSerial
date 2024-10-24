@@ -2,15 +2,47 @@ import sys
 import serial
 import serial.tools.list_ports
 from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtGui import QIcon, QCloseEvent
+from PySide6.QtCore import QThread, Signal
 from main_window_ui import Ui_MainWindow
+import resources_rc
+
+
+class SerialThread(QThread):
+    data_received = Signal(str)
+
+    def __init__(self, serial_port: serial.Serial):
+        super().__init__()
+        self.serial_port = serial_port
+        self.running = True
+
+    def run(self):
+        while self.running:
+            if self.serial_port and self.serial_port.is_open and self.serial_port.in_waiting > 0:
+                received = self.serial_port.readline()
+                data = received.decode("utf-8").strip()
+                self.data_received.emit(data)
+
+    def stop(self):
+        self.running = False
 
 class SerialTool(QMainWindow):
+    def closeEvent(self, event: QCloseEvent):
+        if self.serial_thread:
+            self.serial_thread.stop()
+        event.accept()
+        # Make sure Application exit
+        QApplication.instance().quit()
+
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setFixedSize(640, 500) # Fixed Windows size
-        
+        self.setFixedSize(640, 510) # Fixed Windows size
+        # self.setWindowIcon(QIcon("nkg.ico"))  # Set Windows ICON
+        resources_rc.qInitResources()
+        self.setWindowIcon(QIcon(":/nkg.ico"))  # Set icon from resource
+
         # Initialize COM Port
         self.populate_com_ports()
 
@@ -25,6 +57,7 @@ class SerialTool(QMainWindow):
         # bind button clicked event
         self.ui.connect_button.clicked.connect(self.connect_serial)
         self.ui.disconnect_button.clicked.connect(self.disconnect_serial)
+        self.ui.clear_button.clicked.connect(self.clear_message)
         self.ui.refresh_button.clicked.connect(self.refresh_ports)
         self.ui.send_button.clicked.connect(self.send_data)
 
@@ -41,11 +74,15 @@ class SerialTool(QMainWindow):
         baudrate = self.ui.baudrate_spinbox.value()
         try:
             if com_port != "":
-                self.serial_port = serial.Serial(com_port, baudrate)
+                self.serial_port = serial.Serial(com_port, baudrate, timeout=1)
                 self.ui.send_button.setEnabled(True)
                 self.ui.connect_button.setEnabled(False)
                 self.ui.disconnect_button.setEnabled(True)
                 self.ui.status_label.setText("Connected")
+
+                self.serial_thread = SerialThread(self.serial_port)
+                self.serial_thread.data_received.connect(self.receive_data)
+                self.serial_thread.start()
             else:
                 self.ui.status_label.setText("Please select COM port!")
         except Exception as e:
@@ -58,10 +95,15 @@ class SerialTool(QMainWindow):
                 self.ui.send_button.setEnabled(False)
                 self.ui.connect_button.setEnabled(True)
                 self.ui.disconnect_button.setEnabled(False)
+                if self.serial_thread:
+                    self.serial_thread.stop()
                 self.serial_port.close()
                 self.ui.status_label.setText("Disconnected")
         except Exception as e:
             self.ui.status_label.setText(f"Error: {e}")
+
+    def clear_message(self):
+        self.ui.receiver_text.clear()
 
     def refresh_ports(self):
         """Reflash available COM Port list"""
@@ -72,15 +114,14 @@ class SerialTool(QMainWindow):
 
     def send_data(self):
         """Send serial command"""
-        if self.serial_port and self.serial_port.is_open:
-            data = self.ui.command_edit.text().encode()
-            self.serial_port.write(data)
+        data = self.ui.command_edit.text()
+        if self.serial_port and self.serial_port.is_open and data != "":
+            self.serial_port.write(data.encode())
+            self.ui.receiver_text.append("Send: " + data)
 
-    def receive_data(self):
+    def receive_data(self, data: str):
         """Receive serial message"""
-        if self.serial_port and self.serial_port.is_open:
-            data = self.serial_port.read_all().decode()
-            self.ui.receiver_text.append(data)
+        self.ui.receiver_text.append(f"Received: {data}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
