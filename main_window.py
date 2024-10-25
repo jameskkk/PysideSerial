@@ -1,4 +1,5 @@
 import sys
+import os
 import serial
 import serial.tools.list_ports
 from PySide6.QtWidgets import QApplication, QMainWindow
@@ -6,6 +7,7 @@ from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 from PySide6.QtGui import QIcon, QCloseEvent
 from PySide6.QtCore import QThread, Signal
 from main_window_ui import Ui_MainWindow
+from password_dialog import PasswordDialog
 import resources_rc
 
 
@@ -69,7 +71,14 @@ class SerialTool(QMainWindow):
     def populate_com_ports(self):
         ports = serial.tools.list_ports.comports()
         for port in ports:
-            self.ui.com_combo.addItem(port.device)
+            if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+                if "USB" in port.description.upper() or "USB" in port.hwid.upper():
+                    self.ui.com_combo.addItem(port.device)
+                    if not os.access(port.device, os.R_OK) or not os.access(port.device, os.W_OK):
+                        dialog = PasswordDialog(device=port.device)
+                        dialog.exec()
+            else:
+                self.ui.com_combo.addItem(port.device)
 
     def connect_serial(self):
         """Connect to selection COM Port"""
