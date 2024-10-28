@@ -77,7 +77,7 @@ class SerialTool(QMainWindow):
             if "USB" in port or "ASRL" in port:
                 if sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
                     if "/dev/ttyACM" in port: # ASRL/dev/ttyACM0::INSTR
-                        dev = port.split("/")[1].split("::")[0]
+                        dev = port.split("::")[0].replace("ASRL", "")
                         self.ui.com_combo.addItem(port)
                         if not os.access(dev, os.R_OK) or not os.access(dev, os.W_OK):
                             dialog = PasswordDialog(device=dev)
