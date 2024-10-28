@@ -75,11 +75,15 @@ class SerialTool(QMainWindow):
         ports = self.resource_manager.list_resources()
         for port in ports:
             if "USB" in port or "ASRL" in port:
-                self.ui.com_combo.addItem(port)
-                # 無法取得路徑來設定存取權限
-                # if not os.access(port.device, os.R_OK) or not os.access(port.device, os.W_OK):
-                #     dialog = PasswordDialog(device=port.device)
-                #     dialog.exec()
+                if sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
+                    if "/dev/ttyACM" in port: # ASRL/dev/ttyACM0::INSTR
+                        dev = port.split("/")[1].split("::")[0]
+                        self.ui.com_combo.addItem(port)
+                        if not os.access(dev, os.R_OK) or not os.access(dev, os.W_OK):
+                            dialog = PasswordDialog(device=dev)
+                            dialog.exec()
+                else:
+                    self.ui.com_combo.addItem(port)
 
     def initialize_visa(self, com_port: str, baudrate: int, data_bits: int): 
         try:
