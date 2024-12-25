@@ -1,6 +1,7 @@
-import sys
+# import sys
 import subprocess
-from PySide6.QtWidgets import QApplication, QLineEdit, QPushButton, QVBoxLayout, QDialog, QLabel
+from PySide6.QtWidgets import QLineEdit, QPushButton, QVBoxLayout, QDialog, QLabel
+
 
 class PasswordDialog(QDialog):
     def __init__(self, device=""):
@@ -21,7 +22,7 @@ class PasswordDialog(QDialog):
         self.layout.addWidget(self.submit_button)
 
         self.setLayout(self.layout)
-    
+
     def submit_password(self):
         password = self.password_input.text()
         self.run_chmod(password, self.device)

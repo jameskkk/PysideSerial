@@ -27,6 +27,7 @@ class SerialThread(QThread):
     def stop(self):
         self.running = False
 
+
 class SerialTool(QMainWindow):
     def closeEvent(self, event: QCloseEvent):
         if self.serial_thread:
@@ -98,7 +99,7 @@ class SerialTool(QMainWindow):
         except Exception as e:
             print("Error:", e)
         return False
-    
+
     def connect_serial(self):
         """Connect to selection COM Port"""
         com_port = self.ui.com_combo.currentText()
@@ -150,6 +151,7 @@ class SerialTool(QMainWindow):
     def receive_data(self, data: str):
         """Receive serial message"""
         self.ui.receiver_text.append(f"Received: {data}")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

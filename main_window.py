@@ -3,7 +3,7 @@ import os
 import serial
 import serial.tools.list_ports
 from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
+# from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 from PySide6.QtGui import QIcon, QCloseEvent
 from PySide6.QtCore import QThread, Signal
 from main_window_ui import Ui_MainWindow
@@ -29,6 +29,7 @@ class SerialThread(QThread):
     def stop(self):
         self.running = False
 
+
 class SerialTool(QMainWindow):
     def closeEvent(self, event: QCloseEvent):
         if self.serial_thread:
@@ -42,7 +43,7 @@ class SerialTool(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.setFixedSize(640, 510) # Fixed Windows size
+        self.setFixedSize(640, 510)  # Fixed Windows size
         # self.setWindowIcon(QIcon("nkg.ico"))  # Set Windows ICON
         resources_rc.qInitResources()
         self.setWindowIcon(QIcon(":/nkg.ico"))  # Set icon from resource
@@ -135,6 +136,7 @@ class SerialTool(QMainWindow):
     def receive_data(self, data: str):
         """Receive serial message"""
         self.ui.receiver_text.append(f"Received: {data}")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,6 +1,7 @@
 import serial
 import serial.tools.list_ports
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QComboBox, QPushButton, QFormLayout, QSpinBox, QHBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPushButton, QFormLayout, QSpinBox, QHBoxLayout
+
 
 class SerialPortTool(QWidget):
     def __init__(self):

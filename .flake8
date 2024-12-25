@@ -1,0 +1,21 @@
+[flake8]
+max-line-length = 128
+extend-ignore = E501,E402
+exclude =
+    factorystand_protobuf,
+    debian,
+    repos,
+    factorystation/resources,
+    extras,
+    tests,
+    Dockerfile,
+    dotit-all.bash,
+    run.sh,
+    Makefile,
+    Pipfile,
+    Pipfile.lock,
+    README.md,
+    run.sh,
+    station-config.conf,
+    build,
+    test.py
