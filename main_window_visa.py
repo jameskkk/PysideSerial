@@ -1,15 +1,17 @@
+"""Visa Application Entrance"""
 import sys
 import os
+import pyvisa
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon, QCloseEvent
-from PySide6.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal, Slot
 from ui.main_window_visa_ui import Ui_MainWindow
 from password_dialog import PasswordDialog
 import resources_rc
-import pyvisa
 
 
 class SerialThread(QThread):
+    """SerialThread run."""
     data_received = Signal(str)
 
     def __init__(self, serial_port: pyvisa.Resource):
@@ -18,6 +20,7 @@ class SerialThread(QThread):
         self.running = True
 
     def run(self):
+        """QThread run."""
         while self.running:
             if self.serial_port:
                 received = self.serial_port.read()
@@ -25,11 +28,16 @@ class SerialThread(QThread):
                 self.data_received.emit(data)
 
     def stop(self):
+        """Stop method"""
         self.running = False
 
 
 class SerialTool(QMainWindow):
+    """SerialTool main class."""
+
+    @Slot()
     def closeEvent(self, event: QCloseEvent):
+        """Close window event"""
         if self.serial_thread:
             self.serial_thread.stop()
         event.accept()
@@ -69,6 +77,7 @@ class SerialTool(QMainWindow):
         self.resource_manager = None
 
     def populate_com_ports(self):
+        """Enumerate COM port"""
         self.ui.com_combo.clear()
         # 建立 Resource Manager
         self.resource_manager = pyvisa.ResourceManager("@py")
@@ -87,6 +96,7 @@ class SerialTool(QMainWindow):
                     self.ui.com_combo.addItem(port)
 
     def initialize_visa(self, com_port: str, baudrate: int, data_bits: int):
+        """Initialize visa"""
         try:
             self.resource_manager = pyvisa.ResourceManager("@py")
             self.serial_port = self.resource_manager.open_resource(com_port)
@@ -135,6 +145,7 @@ class SerialTool(QMainWindow):
             self.ui.status_label.setText(f"Error: {e}")
 
     def clear_message(self):
+        """Clear message"""
         self.ui.receiver_text.clear()
 
     def refresh_ports(self):

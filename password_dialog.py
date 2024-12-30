@@ -1,9 +1,12 @@
+"""Passward Dialog"""
 # import sys
 import subprocess
 from PySide6.QtWidgets import QLineEdit, QPushButton, QVBoxLayout, QDialog, QLabel
 
 
 class PasswordDialog(QDialog):
+    """Passward Dialog Class"""
+
     def __init__(self, device=""):
         super().__init__()
         self.device = device
@@ -24,11 +27,13 @@ class PasswordDialog(QDialog):
         self.setLayout(self.layout)
 
     def submit_password(self):
+        """Submit password"""
         password = self.password_input.text()
         self.run_chmod(password, self.device)
         self.accept()
 
     def run_chmod(self, password: str, device: str):
+        """Run chmod command"""
         # Example chmod command with sudo
         command = f"echo {password} | sudo -S chmod 666 {device}"
         try:
