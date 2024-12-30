@@ -11,7 +11,6 @@ from password_dialog import PasswordDialog
 import resources_rc
 
 
-
 class SerialThread(QThread):
     data_received = Signal(str)
 

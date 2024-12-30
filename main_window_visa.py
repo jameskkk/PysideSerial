@@ -41,7 +41,7 @@ class SerialTool(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.setFixedSize(640, 510) # Fixed Windows size
+        self.setFixedSize(640, 510)  # Fixed Windows size
         # self.setWindowIcon(QIcon("nkg.ico"))  # Set Windows ICON
         resources_rc.qInitResources()
         self.setWindowIcon(QIcon(":/nkg.ico"))  # Set icon from resource
@@ -77,7 +77,7 @@ class SerialTool(QMainWindow):
         for port in ports:
             if "USB" in port or "ASRL" in port:
                 if sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
-                    if "/dev/ttyACM" in port: # ASRL/dev/ttyACM0::INSTR
+                    if "/dev/ttyACM" in port:  # ASRL/dev/ttyACM0::INSTR
                         dev = port.split("::")[0].replace("ASRL", "")
                         self.ui.com_combo.addItem(port)
                         if not os.access(dev, os.R_OK) or not os.access(dev, os.W_OK):
@@ -86,10 +86,10 @@ class SerialTool(QMainWindow):
                 else:
                     self.ui.com_combo.addItem(port)
 
-    def initialize_visa(self, com_port: str, baudrate: int, data_bits: int): 
+    def initialize_visa(self, com_port: str, baudrate: int, data_bits: int):
         try:
             self.resource_manager = pyvisa.ResourceManager("@py")
-            self.serial_port = self.resource_manager.open_resource(com_port) 
+            self.serial_port = self.resource_manager.open_resource(com_port)
             self.serial_port.baud_rate = baudrate  # 設置與 Arduino 一致的波特率
             self.serial_port.data_bits = data_bits
             self.serial_port.parity = pyvisa.constants.Parity.none
