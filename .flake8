@@ -1,7 +1,6 @@
 [flake8]
 max-line-length = 128
 extend-ignore = E501,E402
-exclude=ui/*,resources_rc.py
 exclude =
     factorystand_protobuf,
     debian,
@@ -19,4 +18,6 @@ exclude =
     run.sh,
     station-config.conf,
     build,
-    test.py
+    test.py,
+    ui,
+    resources_rc.py
