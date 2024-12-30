@@ -1,0 +1,9 @@
+[MASTER]
+ignore=ui,visa_test.py,resources_rc.py
+ignore-paths=ui
+ignored-modules=os
+max-line-length=128
+extension-pkg-whitelist=PySide6
+
+[MESSAGES CONTROL]
+disable=E0401,C0103,W0703,R0801,R0902

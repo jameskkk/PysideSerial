@@ -1,13 +1,20 @@
+"""Serial port tool example"""
 import serial
 import serial.tools.list_ports
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPushButton, QFormLayout, QSpinBox, QHBoxLayout
 
 
 class SerialPortTool(QWidget):
+    """SerialPortTool main class"""
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Serial Port Tool")
+        self.init_layout()
 
+        self.serial_connection = None
+
+    def init_layout(self):
+        """Initialize UI layout"""
         # 介面布局
         layout = QVBoxLayout()
         form_layout = QFormLayout()
@@ -71,7 +78,8 @@ class SerialPortTool(QWidget):
         stop_bits = float(self.stop_bits_combo.currentText())
 
         try:
-            self.serial_connection = serial.Serial(port=com_port, baudrate=baudrate, bytesize=data_bits, stopbits=stop_bits, timeout=1)
+            self.serial_connection = serial.Serial(port=com_port, baudrate=baudrate, bytesize=data_bits,
+                                                   stopbits=stop_bits, timeout=1)
             print(f"Connected to {com_port} with baudrate {baudrate}")
         except Exception as e:
             print(f"Error connecting to {com_port}: {e}")

@@ -1,3 +1,5 @@
+"""Application Entrance"""
+
 import sys
 import os
 import serial
@@ -5,13 +7,15 @@ import serial.tools.list_ports
 from PySide6.QtWidgets import QApplication, QMainWindow
 # from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 from PySide6.QtGui import QIcon, QCloseEvent
-from PySide6.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal, Slot
 from ui.main_window_ui import Ui_MainWindow
 from password_dialog import PasswordDialog
 import resources_rc
 
 
 class SerialThread(QThread):
+    """SerialThread class."""
+
     data_received = Signal(str)
 
     def __init__(self, serial_port: serial.Serial):
@@ -20,6 +24,7 @@ class SerialThread(QThread):
         self.running = True
 
     def run(self):
+        """SerialThread run."""
         while self.running:
             if self.serial_port and self.serial_port.is_open and self.serial_port.in_waiting > 0:
                 received = self.serial_port.readline()
@@ -27,11 +32,16 @@ class SerialThread(QThread):
                 self.data_received.emit(data)
 
     def stop(self):
+        """Stop method"""
         self.running = False
 
 
 class SerialTool(QMainWindow):
+    """SerialTool main class."""
+
+    @Slot()
     def closeEvent(self, event: QCloseEvent):
+        """Windows close event"""
         if self.serial_thread:
             self.serial_thread.stop()
         event.accept()
@@ -70,6 +80,7 @@ class SerialTool(QMainWindow):
         self.serial_thread = None
 
     def populate_com_ports(self):
+        """Enumerate COM port"""
         ports = serial.tools.list_ports.comports()
         for port in ports:
             if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
@@ -117,6 +128,7 @@ class SerialTool(QMainWindow):
             self.ui.status_label.setText(f"Error: {e}")
 
     def clear_message(self):
+        """Clear message"""
         self.ui.receiver_text.clear()
 
     def refresh_ports(self):
