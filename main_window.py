@@ -10,6 +10,7 @@ from ui.main_window_ui import Ui_MainWindow
 from password_dialog import PasswordDialog
 import resources_rc
 
+
 class SerialThread(QThread):
     data_received = Signal(str)
 
