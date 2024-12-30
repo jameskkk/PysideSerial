@@ -3,7 +3,7 @@ import os
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtGui import QIcon, QCloseEvent
 from PySide6.QtCore import QThread, Signal
-from main_window_visa_ui import Ui_MainWindow
+from ui.main_window_visa_ui import Ui_MainWindow
 from password_dialog import PasswordDialog
 import resources_rc
 import pyvisa

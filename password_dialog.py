@@ -32,7 +32,7 @@ class PasswordDialog(QDialog):
         # Example chmod command with sudo
         command = f"echo {password} | sudo -S chmod 666 {device}"
         try:
-            # os.chmod(device, 0o666) 
+            # os.chmod(device, 0o666)
             subprocess.run(command, shell=True, check=True)
             self.label.setText("Permission changed successfully!")
         except subprocess.CalledProcessError:
